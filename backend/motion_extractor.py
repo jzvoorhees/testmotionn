@@ -1,17 +1,37 @@
 import cv2
-import mediapipe as mp
 import numpy as np
 import json
 import os
+import sys
 
-# Standard way to access solutions, with a fallback if namespace is tricky
+# --- CRITICAL: PREVENT LOCAL CONFLICTS ---
+# If there is a folder or file named 'mediapipe' in the current directory, 
+# it will break the import. We remove it from sys.path if it's the first entry.
+if sys.path[0] == os.getcwd() or sys.path[0] == '':
+    sys.path.pop(0)
+
 try:
-    mp_pose = mp.solutions.pose
-    mp_drawing = mp.solutions.drawing_utils
-except AttributeError:
-    # Fallback for some environments where solutions isn't automatically exposed
+    import mediapipe as mp
     import mediapipe.solutions.pose as mp_pose
     import mediapipe.solutions.drawing_utils as mp_drawing
+    print(f"DEBUG: MediaPipe loaded from {mp.__file__}")
+except ImportError as e:
+    print(f"DEBUG: Standard import failed: {e}")
+    # Try to force import from site-packages
+    import importlib.util
+    import site
+    packages = site.getsitepackages()
+    found = False
+    for p in packages:
+        spec = importlib.util.find_spec("mediapipe", [p])
+        if spec:
+            mp = importlib.import_module("mediapipe")
+            import mediapipe.solutions.pose as mp_pose
+            import mediapipe.solutions.drawing_utils as mp_drawing
+            found = True
+            break
+    if not found:
+        raise ImportError("Could not find mediapipe installation. Please run 'pip install mediapipe'.")
 
 class MotionExtractor:
     def __init__(self):
