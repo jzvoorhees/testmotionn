@@ -4,9 +4,14 @@ import numpy as np
 import json
 import os
 
-# Use direct imports for solutions to avoid namespace issues
-from mediapipe.python.solutions import pose as mp_pose
-from mediapipe.python.solutions import drawing_utils as mp_drawing
+# Standard way to access solutions, with a fallback if namespace is tricky
+try:
+    mp_pose = mp.solutions.pose
+    mp_drawing = mp.solutions.drawing_utils
+except AttributeError:
+    # Fallback for some environments where solutions isn't automatically exposed
+    import mediapipe.solutions.pose as mp_pose
+    import mediapipe.solutions.drawing_utils as mp_drawing
 
 class MotionExtractor:
     def __init__(self):
