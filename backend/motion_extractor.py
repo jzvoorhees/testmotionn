@@ -4,16 +4,20 @@ import numpy as np
 import json
 import os
 
+# Use direct imports for solutions to avoid namespace issues
+from mediapipe.python.solutions import pose as mp_pose
+from mediapipe.python.solutions import drawing_utils as mp_drawing
+
 class MotionExtractor:
     def __init__(self):
-        self.mp_pose = mp.solutions.pose
+        self.mp_pose = mp_pose
         self.pose = self.mp_pose.Pose(
             static_image_mode=False,
             model_complexity=2,
             enable_segmentation=True,
             min_detection_confidence=0.5
         )
-        self.mp_drawing = mp.solutions.drawing_utils
+        self.mp_drawing = mp_drawing
 
     def extract_motion(self, video_path, output_dir):
         if not os.path.exists(output_dir):
