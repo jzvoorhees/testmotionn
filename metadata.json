@@ -1,5 +1,5 @@
 {
-  "name": "Remix: OpenMotion AI",
-  "description": "Open-source motion transfer using MediaPipe, ControlNet, and AnimateDiff. No API keys required.",
+  "name": "KlingMotion AI - Pro Motion Transfer",
+  "description": "High-fidelity motion transfer using AnimateDiff-SDXL and LCM. Clone dances with cinematic realism on a T4 GPU.",
   "requestFramePermissions": []
 }
