@@ -5,6 +5,11 @@ import shutil
 import os
 import uuid
 import json
+import sys
+
+# Add the current directory to sys.path to ensure local imports work
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from motion_extractor import MotionExtractor
 from pipeline import AnimationPipeline
 
@@ -70,8 +75,8 @@ def run_pipeline(task_id, image_path, video_path):
         pipeline = AnimationPipeline()
         output_path = os.path.join(OUTPUT_DIR, f"{task_id}_result.mp4")
         
-        # Default prompt
-        prompt = "High quality realistic video of the character moving naturally, cinematic lighting, detailed face"
+        # Default prompt for Kling-like realism
+        prompt = "Cinematic 4k video, highly detailed realistic person dancing, fluid movement, masterpiece, hyper-realistic skin texture, professional lighting"
         
         pipeline.generate(image_path, pose_dir, output_path, prompt)
         
