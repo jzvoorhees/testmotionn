@@ -58,14 +58,14 @@ const Header = ({ showDevMode, setShowDevMode }: { showDevMode: boolean, setShow
   <header className="border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-50">
     <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+        <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
           <Zap className="w-5 h-5 text-black fill-current" />
         </div>
-        <h1 className="text-xl font-bold tracking-tight text-white">OpenMotion <span className="text-emerald-500">AI</span></h1>
+        <h1 className="text-xl font-bold tracking-tight text-white">KlingMotion <span className="text-blue-500">AI</span></h1>
       </div>
       <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
-        <a href="#setup" className="hover:text-white transition-colors">Setup Guide</a>
-        <a href="#architecture" className="hover:text-white transition-colors">Architecture</a>
+        <a href="#setup" className="hover:text-white transition-colors">Pro Setup</a>
+        <a href="#architecture" className="hover:text-white transition-colors">SDXL Engine</a>
         <button 
           onClick={() => setShowDevMode(!showDevMode)}
           className={cn(
@@ -110,8 +110,8 @@ const UploadZone = ({
     <div 
       className={cn(
         "relative group cursor-pointer border-2 border-dashed rounded-2xl transition-all duration-300 overflow-hidden aspect-video flex flex-col items-center justify-center gap-4",
-        isDragging ? "border-emerald-500 bg-emerald-500/5" : "border-zinc-800 hover:border-zinc-700 bg-zinc-900/50",
-        fileData && "border-solid border-emerald-500/50"
+        isDragging ? "border-blue-500 bg-blue-500/5" : "border-zinc-800 hover:border-zinc-700 bg-zinc-900/50",
+        fileData && "border-solid border-blue-500/50"
       )}
       onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
       onDragLeave={() => setIsDragging(false)}
@@ -172,7 +172,7 @@ export default function App() {
       let frame = 0;
       const interval = setInterval(() => {
         ctx.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
-        ctx.strokeStyle = '#10b981';
+        ctx.strokeStyle = '#3b82f6';
         ctx.lineWidth = 2;
         const centerX = canvasRef.current!.width / 2;
         const centerY = canvasRef.current!.height / 2;
@@ -279,18 +279,18 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs font-bold mb-6 uppercase tracking-widest"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-xs font-bold mb-6 uppercase tracking-widest"
           >
             <Zap className="w-3 h-3 fill-current" />
-            100% Open Source • No API Keys
+            SDXL + LCM Turbo • Kling-Level Realism
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-4"
           >
-            Realistic Motion Transfer <br />
-            <span className="text-emerald-500">Without Paid APIs</span>
+            Pro Motion Transfer <br />
+            <span className="text-blue-500">Cinematic Realism</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -298,7 +298,7 @@ export default function App() {
             transition={{ delay: 0.1 }}
             className="text-zinc-400 max-w-2xl mx-auto text-lg"
           >
-            A full-stack solution using MediaPipe, ControlNet, and AnimateDiff. Run it locally or on Google Colab for free.
+            Experience the next generation of dance cloning. Powered by AnimateDiff-SDXL and LCM for ultra-realistic, high-speed generation on T4 GPUs.
           </motion.p>
         </section>
 
@@ -309,7 +309,7 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-zinc-100 uppercase tracking-wider">
-                  <ImageIcon className="w-4 h-4 text-emerald-500" />
+                  <ImageIcon className="w-4 h-4 text-blue-500" />
                   Character Image
                 </div>
                 <UploadZone 
@@ -322,7 +322,7 @@ export default function App() {
               </div>
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-zinc-100 uppercase tracking-wider">
-                  <Video className="w-4 h-4 text-emerald-500" />
+                  <Video className="w-4 h-4 text-blue-500" />
                   Reference Motion
                 </div>
                 <UploadZone 
@@ -357,13 +357,13 @@ export default function App() {
                   "w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300",
                   (!image || !video) 
                     ? "bg-zinc-800 text-zinc-500 cursor-not-allowed" 
-                    : "bg-emerald-500 text-black hover:bg-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                    : "bg-blue-500 text-black hover:bg-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.2)]"
                 )}
               >
                 {appState === AppState.IDLE || appState === AppState.COMPLETED || appState === AppState.ERROR ? (
                   <>
                     <Play className="w-5 h-5 fill-current" />
-                    Start Open-Source Pipeline
+                    Generate Pro Motion (SDXL)
                   </>
                 ) : (
                   <>
@@ -405,7 +405,7 @@ export default function App() {
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-sm font-bold text-white uppercase tracking-widest">Output Preview</h3>
                 {resultVideoUrl && (
-                  <span className="flex items-center gap-1 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">
+                  <span className="flex items-center gap-1 text-xs font-mono text-blue-500 bg-blue-500/10 px-2 py-1 rounded">
                     <CheckCircle2 className="w-3 h-3" />
                     READY
                   </span>
@@ -426,11 +426,11 @@ export default function App() {
                     {appState === AppState.EXTRACTING_POSES ? (
                       <div className="space-y-4 w-full">
                         <canvas ref={canvasRef} width={300} height={400} className="mx-auto" />
-                        <p className="text-sm text-emerald-500 font-mono animate-pulse">{statusMessage}</p>
+                        <p className="text-sm text-blue-500 font-mono animate-pulse">{statusMessage}</p>
                       </div>
                     ) : appState === AppState.GENERATING_VIDEO || appState === AppState.UPLOADING || appState === AppState.CONNECTING ? (
                       <div className="space-y-4">
-                        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mx-auto" />
+                        <Loader2 className="w-12 h-12 text-blue-500 animate-spin mx-auto" />
                         <p className="text-sm text-zinc-400">{statusMessage}</p>
                       </div>
                     ) : (
@@ -480,7 +480,7 @@ export default function App() {
             <div className="space-y-6">
               <div className="p-6 bg-zinc-900/30 border border-zinc-800 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
-                  <Terminal className="w-6 h-6 text-emerald-500" />
+                  <Terminal className="w-6 h-6 text-blue-500" />
                   <h3 className="text-xl font-bold text-white">1. Local Installation</h3>
                 </div>
                 <div className="bg-black/50 p-4 rounded-lg font-mono text-xs text-zinc-300 space-y-2 overflow-x-auto">
@@ -533,21 +533,21 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0 text-emerald-500 font-bold">1</div>
+                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0 text-blue-500 font-bold">1</div>
                   <div>
                     <h4 className="text-white font-bold mb-1">Motion Extraction</h4>
                     <p className="text-sm text-zinc-500">MediaPipe Pose detects 33 landmarks in the reference video. These are converted into a sequence of skeleton images that serve as the "motion blueprint".</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0 text-emerald-500 font-bold">2</div>
+                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0 text-blue-500 font-bold">2</div>
                   <div>
                     <h4 className="text-white font-bold mb-1">Identity Locking</h4>
                     <p className="text-sm text-zinc-500">The character image is processed through a VAE and optionally an IP-Adapter. This ensures the generated character looks exactly like the source image.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0 text-emerald-500 font-bold">3</div>
+                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0 text-blue-500 font-bold">3</div>
                   <div>
                     <h4 className="text-white font-bold mb-1">Diffusion Guidance</h4>
                     <p className="text-sm text-zinc-500">ControlNet Pose uses the skeleton sequence to guide the Stable Diffusion denoising process, forcing the character into the specific poses from the reference video.</p>
@@ -559,9 +559,9 @@ export default function App() {
                 <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Pipeline Visualization</h4>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                     <div className="flex-grow h-1 bg-zinc-800 rounded-full overflow-hidden">
-                      <div className="w-full h-full bg-emerald-500"></div>
+                      <div className="w-full h-full bg-blue-500"></div>
                     </div>
                     <span className="text-[10px] font-mono text-zinc-500">VIDEO_IN</span>
                   </div>
@@ -594,7 +594,7 @@ export default function App() {
       <footer className="border-t border-zinc-800 py-12 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2 opacity-50">
-            <Zap className="w-5 h-5 text-emerald-500" />
+            <Zap className="w-5 h-5 text-blue-500" />
             <span className="font-bold text-white">OpenMotion AI</span>
           </div>
           <p className="text-zinc-600 text-sm">© 2026 OpenMotion AI Research. All rights reserved.</p>
