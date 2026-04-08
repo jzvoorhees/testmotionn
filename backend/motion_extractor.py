@@ -1,3 +1,4 @@
+# Versão corrigida do motion_extractor.py
 import cv2
 import numpy as np
 import json
@@ -5,33 +6,23 @@ import os
 import sys
 
 # --- CRITICAL: PREVENT LOCAL CONFLICTS ---
-# If there is a folder or file named 'mediapipe' in the current directory, 
-# it will break the import. We remove it from sys.path if it's the first entry.
 if sys.path[0] == os.getcwd() or sys.path[0] == '':
     sys.path.pop(0)
 
 try:
     import mediapipe as mp
-    import mediapipe.solutions.pose as mp_pose
-    import mediapipe.solutions.drawing_utils as mp_drawing
+    from mediapipe.solutions import pose as mp_pose
+    from mediapipe.solutions import drawing_utils as mp_drawing
     print(f"DEBUG: MediaPipe loaded from {mp.__file__}")
 except ImportError as e:
     print(f"DEBUG: Standard import failed: {e}")
-    # Try to force import from site-packages
-    import importlib.util
-    import site
-    packages = site.getsitepackages()
-    found = False
-    for p in packages:
-        spec = importlib.util.find_spec("mediapipe", [p])
-        if spec:
-            mp = importlib.import_module("mediapipe")
-            import mediapipe.solutions.pose as mp_pose
-            import mediapipe.solutions.drawing_utils as mp_drawing
-            found = True
-            break
-    if not found:
-        raise ImportError("Could not find mediapipe installation. Please run 'pip install mediapipe'.")
+    print("Attempting to reinstall mediapipe...")
+    import subprocess
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "--force-reinstall", "mediapipe"])
+    
+    import mediapipe as mp
+    from mediapipe.solutions import pose as mp_pose
+    from mediapipe.solutions import drawing_utils as mp_drawing
 
 class MotionExtractor:
     def __init__(self):
@@ -57,12 +48,10 @@ class MotionExtractor:
             if not ret:
                 break
 
-            # Convert to RGB
             image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             results = self.pose.process(image_rgb)
 
             if results.pose_landmarks:
-                # Save landmarks for this frame
                 landmarks = []
                 for lm in results.pose_landmarks.landmark:
                     landmarks.append({
@@ -73,7 +62,6 @@ class MotionExtractor:
                     })
                 pose_data.append(landmarks)
 
-                # Generate Pose Image (ControlNet input)
                 pose_canvas = np.zeros(frame.shape, dtype=np.uint8)
                 self.mp_drawing.draw_landmarks(
                     pose_canvas,
@@ -89,7 +77,6 @@ class MotionExtractor:
 
         cap.release()
         
-        # Save full sequence data
         with open(f"{output_dir}/motion_data.json", 'w') as f:
             json.dump(pose_data, f)
             
